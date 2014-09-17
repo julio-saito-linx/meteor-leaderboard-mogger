@@ -120,7 +120,7 @@ module.exports = require('./src/colorful-logger');
 			}
 
 			this.sendToOutput(opt, fullMessage, cssList);
-			
+
 			return true;
 		};
 
@@ -170,7 +170,7 @@ module.exports = require('./src/colorful-logger');
 					else{
 						opt.css = opt.css + '; color: ' + oneColor;
 					}
-					
+
 				}
 				cssList.push(opt.css);
 			}
@@ -178,7 +178,7 @@ module.exports = require('./src/colorful-logger');
 
 		this.sendToOutput = function(opt, message, cssList) {
 			var localConsole = this.config.output;
-			
+
 			if(opt && _.isArray(opt)){
 				opt = opt[0];
 			}
@@ -7075,7 +7075,7 @@ module.exports = require('./src/colorful-logger');
 				pointcutType = typeof pointcut;
 
 				if (pointcutType === 'string') {
-			
+
 					//saitodisse
 				  var propertyDescription = Object.getOwnPropertyDescriptor(target, pointcut);
 				  if( propertyDescription && propertyDescription.hasOwnProperty('get') ){
@@ -7443,7 +7443,7 @@ module.exports = require('./src/colorful-logger');
 		for (var p in target) {
 			// TODO: Decide whether hasOwnProperty is correct here
 			// Only apply to own properties that are functions, and match the pointcut regexp
-			
+
 			// Check if is it a property defined with Object.defineProperty()
 		  // saitodisse
 		  var propertyDescription = Object.getOwnPropertyDescriptor(target, p);
@@ -7602,9 +7602,9 @@ module.exports = require('./src/colorful-logger');
 	// All other advice types use forward iteration
 	// Around is a special case that uses recursion rather than
 	// iteration.  See Advisor._callAroundAdvice
-	iterators.on = iterators.afterReturning = 
-		iterators.afterThrowing = 
-		iterators.after = 
+	iterators.on = iterators.afterReturning =
+		iterators.afterThrowing =
+		iterators.after =
 		forEach;
 
 	function forEach(array, func) {
@@ -7960,7 +7960,7 @@ Reporter.prototype.onCall = function(info) {
     // Pause
     if(this.showPause){
         // cancel last setTimeout because is processing
-        clearTimeout(this.globalTimeoutLogId);
+        clearTimeout(globalTimeoutLogId);
         // if not canceled, it shows the line bellow
 
         setParentTimeout(this.logger, this.waitForPause, this.pauseCallBack);
@@ -8086,7 +8086,7 @@ Reporter.prototype._renderToConsole = function(info, mainMessage) {
     }
 };
 
-var globalTimeoutLogId = null;
+globalTimeoutLogId = null;
 
 var setParentTimeout = function(logger, wait, pauseCallBack) {
     globalTimeoutLogId = setTimeout(function (){
