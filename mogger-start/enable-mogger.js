@@ -1,33 +1,69 @@
-var transforByType = function transforByType(parameter, withComma) {
-    var comma = '';
-    if(withComma){
-        comma = ', ';
-    }
+var GLOBAL_PADDING_SIZE = 18;
 
+var multiplyChar = function multiplyChar(char, times) {
+    var finalStr = [];
+    for (var i = 0; i < times; i++) {
+        finalStr.push(char);
+    }
+    return finalStr.join('');
+};
+
+var transforByType = function transforByType(parameter) {
     if(_.isString(parameter)){
-        return comma + '\'' + parameter + '\'';
+        return '\'' + parameter + '\'';
     }
     else if(_.isArray(parameter)){
-        var finalArray = '[';
-        var innerComma = '';
-        for (var i = 0; i < parameter.length; i++) {
-            if(finalArray.length > 1){
-                innerComma = ', ';
-            }
-            finalArray = finalArray + innerComma + transforByType(parameter[i]);
+        if(parameter.length === 0){
+            return '[]';
         }
-        return finalArray + ']';
+
+        var finalArray = [];
+        finalArray.push('[');
+
+        for (var i = 0; i < parameter.length; i++) {
+            finalArray.push(transforByType(parameter[i]));
+            if(i !== parameter.length - 1){
+                finalArray.push(', ');
+            }
+        }
+
+        finalArray.push(']');
+        return finalArray.join('');
     }
     else if(_.isObject(parameter)){
-        return comma + JSON.stringify(parameter);
+        var padding = '\n' + multiplyChar(' ', GLOBAL_PADDING_SIZE);
+        return JSON.stringify(parameter, ' ', 4).replace(/\n/gi, padding);
     }
     else if(_.isFunction(parameter)){
-        return comma + parameter + '()';
+        return parameter + '()';
     }
     else{
-        return comma + parameter;
+        return parameter;
     }
 };
+
+var interceptParameters = function(info) {
+    if(info.args.length === 0){
+        return info.method + '()';
+    }
+
+    var finalString = [];
+    finalString.push(info.method);
+    finalString.push('(');
+
+    for (var i = 0; i < info.args.length; i++) {
+        var arg = info.args[i];
+        finalString.push(transforByType(arg));
+        if(i !== info.args.length-1){
+            finalString.push(', ');
+        }
+    }
+
+    finalString.push(')');
+
+    return finalString.join('');
+};
+
 
 enableMogger = function() {
     /**
@@ -45,28 +81,19 @@ enableMogger = function() {
             { title: 'Players', target: Players },
             { title: 'Session', target: Session },
             { title: 'Template.leaderboard', target: Template.leaderboard },
+            { title: 'Template.todo', target: Template.todo },
             { title: 'Template.player', target: Template.player },
         ],
         globalBeforeConfig: {
-            size: 18
+            size: GLOBAL_PADDING_SIZE
         },
         globalInterceptors: [
             {
-                filterRegex: /^(get|set|equals|_ensureKey|_getFindOptions|_getFindSelector|find(One)?)$/,
-                callback: function(info) {
-                    var arg0 = '', arg1 = '';
-                    if(info.args[0]){
-                        arg0 = transforByType(info.args[0]);
-                    }
-                    if(info.args[1]){
-                        arg1 = transforByType(info.args[1]);
-                    }
-
-                    return info.method + '( ' + arg0 + arg1 + ' )';
-                }
+                filterRegex: /./,
+                callback: interceptParameters
             }
         ],
-        showArguments: true,
+        showArguments: true
     });
 
     /**
@@ -83,12 +110,17 @@ enableMogger = function() {
     });
 
     mogger.traceObj({
-        localBeforeConfig: { css: GLOBAL_CSS + 'color: #772' },
+        localBeforeConfig: { css: GLOBAL_CSS + 'color: #274' },
         before: { message: 'T.leaderboard:' }, targetTitle: 'Template.leaderboard'
     });
 
     mogger.traceObj({
-        localBeforeConfig: { css: GLOBAL_CSS + 'color: #272' },
+        localBeforeConfig: { css: GLOBAL_CSS + 'color: #2B4' },
+        before: { message: 'T.todo:' }, targetTitle: 'Template.todo'
+    });
+
+    mogger.traceObj({
+        localBeforeConfig: { css: GLOBAL_CSS + 'color: #204' },
         before: { message: 'T.player:' }, targetTitle: 'Template.player'
     });
 
