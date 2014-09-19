@@ -73,7 +73,8 @@ Template.leaderboard.events({
 Template.leaderboard.events({
   'click input[data-hook=reset]': function () {
     //toggle sort
-    Meteor.call('bar', function (error, result) { console.log('bar=', error, result); } );
+    Meteor.call('removeAll');
+    Meteor.call('createRandomPlayers');
   }
 });
 

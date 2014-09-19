@@ -2,27 +2,25 @@ Players = new Mongo.Collection("players");
 
 
 Meteor.methods({
-	bar: function () {
-	  // .. do other stuff ..
-	  return "baz";
-	}
+  removeAll: function () {
+    Players.remove({});
+  },
+  createRandomPlayers: function () {
+    var names = ["Abram", "Joyce", "Marie", "Tim"];
+    for (var i = 0; i < names.length; i++){
+      var name = names[i];
+      var score = Math.floor(Random.fraction()*10)*5;
+      Players.insert({name: name, score: score});
+    }
+  }
 });
 
 enableMogger();
 
 Meteor.startup(function () {
 
-  Meteor.call('bar');
-
-  //console.log(Meteor)
-
   if (Players.find().count() === 0) {
-    // !!! only on the first time ever !!!
-    var names = ["Mario",
-                 "Joyce",
-                 "Marie"];
-    for (var i = 0; i < names.length; i++)
-      Players.insert({name: names[i], score: Math.floor(Random.fraction()*10)*5});
+    Meteor.call('createRandomPlayers');
   }
 
 
