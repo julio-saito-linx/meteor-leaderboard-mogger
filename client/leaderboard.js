@@ -6,6 +6,9 @@
  */
 Players = new Mongo.Collection("players");
 
+if(!Session.get("selected_sort")){
+  Session.set("selected_sort", {sort: [["score", "desc"], ["name", "asc"]]});
+}
 
 // ////////////////////////
 // Templates
@@ -17,7 +20,7 @@ Players = new Mongo.Collection("players");
 // particular player is the selected one, and the empty string otherwise —
 // this is what sets the CSS to highlight the current player.)
 Template.leaderboard.players = function () {
-  return Players.find({}, {sort: {score: -1, name: 1}});
+  return Players.find({}, Session.get("selected_sort"));
 };
 
 Template.leaderboard.selected_name = function () {
@@ -26,12 +29,6 @@ Template.leaderboard.selected_name = function () {
 };
 
 
-// ////////////////////////
-// Session
-
-// A Session variable, "selected_player", that holds the Mongo document id of
-// the currently selected player, if any. Search  leaderboard.js for
-// "selected_player" to see the four places it is used, 3 reads and 1 write.
 Template.player.selected = function () {
   return Session.equals("selected_player", this._id) ? "selected" : '';
 };
@@ -46,10 +43,36 @@ Template.leaderboard.events({
   }
 });
 
+
 //set the current player
 Template.player.events({
   'click': function () {
+    // ////////////////////////
+    // Session
+
+    // A Session variable, "selected_player", that holds the Mongo document id of
+    // the currently selected player, if any. Search  leaderboard.js for
+    // "selected_player" to see the four places it is used, 3 reads and 1 write.
     Session.set("selected_player", this._id);
+  }
+});
+
+Template.leaderboard.events({
+  'click input[data-hook=change_sort]': function () {
+    console.log(arguments)
+    console.log(Session.get("selected_sort"))
+
+    console.log(Session.get("selected_sort"))
+
+
+    //toggle sort
+    var selectedSort = Session.get("selected_sort");
+    if(selectedSort.sort[0][0] === 'score'){
+      Session.set("selected_sort", {sort: [["name", "asc"],   ["score", "desc"]]});
+    }
+    else{
+      Session.set("selected_sort", {sort: [["score", "desc"], ["name", "asc"]]});
+    }
   }
 });
 
