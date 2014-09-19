@@ -4,6 +4,7 @@ enableMogger();
 
 Meteor.startup(function () {
   if (Players.find().count() === 0) {
+    // !!! only on the first time ever !!!
     var names = ["Mario",
                  "Joyce",
                  "Marie"];
