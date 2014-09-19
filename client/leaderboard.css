@@ -86,8 +86,12 @@ body {
 
 
 /*////*/
-.remove-button{
-    margin-left: 10px;
+.btn-remove{
+    height: 18px;
+    font-size: 11px;
+    line-height: 0px;
+    text-align: center;
+    padding: 8px 21px;
 }
 
 .buttons-rows .row{

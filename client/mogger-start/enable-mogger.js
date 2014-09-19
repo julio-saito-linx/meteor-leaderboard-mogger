@@ -72,7 +72,7 @@ enableMogger = function() {
      */
 
     var GLOBAL_CSS = [
-                        'font-size: 14px;' +
+                        'font-size: 12px;' +
                         ''
                      ].join();
 

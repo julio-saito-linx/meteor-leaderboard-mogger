@@ -49,7 +49,7 @@ Template.player.selected = function () {
 // EVENTS
 //"give points" button
 Template.leaderboard.events({
-  'click input.inc': function () {
+  'click button[data-hook=add_five]': function () {
     Players.update(Session.get("selected_player"), {$inc: {score: 5}});
   }
 });

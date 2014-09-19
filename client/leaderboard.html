@@ -13,20 +13,30 @@
     <div class="col-md-6">
 
       <div class="leaderboard">
-        {{#each players}}
-          {{> player}}
-        {{/each}}
+        <table class="table">
+          <thead>
+            <tr>
+              <th>
+                player
+              </th>
+              <th>
+                score
+              </th>
+              <th>
+                +5
+              </th>
+              <th>
+                remove
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each players}}
+              {{> player}}
+            {{/each}}
+          </tbody>
+        </table>
       </div>
-
-      {{#if selected_name}}
-      <div class="details">
-        <div class="name">{{selected_name}}</div>
-        <input type="button" class="inc" value="Give 5 points" />
-      </div>
-      {{else}}
-      <div class="none">Click a player to select</div>
-      {{/if}}
-
     </div>
 
     <!-- BUTTONS -->
@@ -62,10 +72,19 @@
 </template>
 
 <template name="player">
-  <div class="player {{selected}}">
-    <span class="name">{{name}}</span>
-    <span class="score">{{score}}</span>
-    <button class="btn btn-default remove-button" data-hook="remove-player">X</button>
-  </div>
+  <tr class="player {{selected}}">
+    <td>
+      {{name}}
+    </td>
+    <td>
+      {{score}}
+    </td>
+    <td>
+      <button class="btn btn-default btn-remove" data-hook="add_five">+5</button>
+    </td>
+    <td>
+      <button class="btn btn-default btn-remove" data-hook="remove-player">X</button>
+    </td>
+  </tr>
 </template>
 
