@@ -10,6 +10,16 @@ if(!Session.get("selected_sort")){
   Session.set("selected_sort", {sort: [["score", "desc"], ["name", "asc"]]});
 }
 
+var isSortingBy = function() {
+    var selectedSort = Session.get("selected_sort");
+    if(selectedSort.sort[0][0] === 'score'){
+      return 'score';
+    }
+    else{
+      return 'name';
+    }
+};
+
 // ////////////////////////
 // Templates
 
@@ -22,12 +32,13 @@ if(!Session.get("selected_sort")){
 Template.leaderboard.players = function () {
   return Players.find({}, Session.get("selected_sort"));
 };
-
 Template.leaderboard.selected_name = function () {
   var player = Players.findOne(Session.get("selected_player"));
   return player && player.name;
 };
-
+Template.leaderboard.isSortingBy = function () {
+  return isSortingBy();
+};
 
 Template.player.selected = function () {
   return Session.equals("selected_player", this._id) ? "selected" : '';
@@ -59,13 +70,18 @@ Template.player.events({
 
 Template.leaderboard.events({
   'click input[data-hook=change_sort]': function () {
+
+    var jQueryEvent = arguments[0];
+    var element = $(jQueryEvent.target);
+
     //toggle sort
-    var selectedSort = Session.get("selected_sort");
-    if(selectedSort.sort[0][0] === 'score'){
+    if(isSortingBy() === 'score'){
       Session.set("selected_sort", {sort: [["name", "asc"],   ["score", "desc"]]});
+      element.val('sort by score');
     }
     else{
       Session.set("selected_sort", {sort: [["score", "desc"], ["name", "asc"]]});
+      element.val('sort by name');
     }
   }
 });
