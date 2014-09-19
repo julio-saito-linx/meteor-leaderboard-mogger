@@ -4,4 +4,4 @@
 
 - [x] Make a button that resets everyone's score to a random number. (There is already code to do this in the server startup code. Can you factor some of this code out and have it run on both the client and the server?)
 
-- [ ] Implement a way to add and remove scientists from the leaderboard.
+- [x] Implement a way to add and remove scientists from the leaderboard.
