@@ -1,4 +1,4 @@
-var GLOBAL_PADDING_SIZE = 9;
+var GLOBAL_PADDING_SIZE = 20;
 /**
  * MOGGER on Server
  * ---------------------------------------
@@ -76,6 +76,8 @@ enableMogger = function() {
     mogger = new Mogger({
         surrogateTargets: [
             { title: 'Players', target: Players },
+            { title: 'M.method_handlers', target: Meteor.server.method_handlers },
+            { title: 'M.Collect.proto', target: Meteor.Collection.prototype },
         ],
         globalBeforeConfig: {
             size: GLOBAL_PADDING_SIZE
@@ -89,8 +91,8 @@ enableMogger = function() {
         showPause: false
     });
 
-    mogger.traceObj({
-        before: { message: 'Players:' }, targetTitle: 'Players'
-    });
+    mogger.traceObj({ before: { message: 'Players:' }, targetTitle: 'Players' });
+    mogger.traceObj({ before: { message: 'M.method_handlers:' },  targetTitle: 'M.method_handlers' });
+    mogger.traceObj({ before: { message: 'M.Collect.proto:' },  targetTitle: 'M.Collect.proto' });
 };
 

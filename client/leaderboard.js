@@ -59,12 +59,6 @@ Template.player.events({
 
 Template.leaderboard.events({
   'click input[data-hook=change_sort]': function () {
-    console.log(arguments)
-    console.log(Session.get("selected_sort"))
-
-    console.log(Session.get("selected_sort"))
-
-
     //toggle sort
     var selectedSort = Session.get("selected_sort");
     if(selectedSort.sort[0][0] === 'score'){
@@ -73,6 +67,13 @@ Template.leaderboard.events({
     else{
       Session.set("selected_sort", {sort: [["score", "desc"], ["name", "asc"]]});
     }
+  }
+});
+
+Template.leaderboard.events({
+  'click input[data-hook=reset]': function () {
+    //toggle sort
+    Meteor.call('bar', function (error, result) { console.log('bar=', error, result); } );
   }
 });
 
