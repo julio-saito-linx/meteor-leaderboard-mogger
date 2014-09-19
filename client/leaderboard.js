@@ -68,6 +68,12 @@ Template.player.events({
   }
 });
 
+Template.player.events({
+  'click [data-hook=remove-player] ': function () {
+    Players.remove(this._id);
+  }
+});
+
 Template.leaderboard.events({
   'click input[data-hook=change_sort]': function () {
 
@@ -91,6 +97,13 @@ Template.leaderboard.events({
     //toggle sort
     Meteor.call('removeAll');
     Meteor.call('createRandomPlayers');
+  }
+});
+
+Template.leaderboard.events({
+  'click input[data-hook=add-new-player-button]': function () {
+    var new_player_name = $('input[data-hook=add-new-player-text]').val();
+    Meteor.call('createPlayerRandomScore', new_player_name);
   }
 });
 

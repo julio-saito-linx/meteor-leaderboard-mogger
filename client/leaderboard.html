@@ -3,8 +3,10 @@
 </head>
 
 <body>
-  <div id="outer">
-    {{> leaderboard}}
+  <div class="container">
+    <div id="outer">
+      {{> leaderboard}}
+    </div>
   </div>
 </body>
 
@@ -15,9 +17,6 @@
     {{/each}}
   </div>
 
-  <p>Is sorting by {{ isSortingBy }}</p>
-  <input type="button" data-hook="change_sort" value="change sort" />
-  <input type="button" data-hook="reset" value="reset" />
 
   {{#if selected_name}}
   <div class="details">
@@ -27,12 +26,30 @@
   {{else}}
   <div class="none">Click a player to select</div>
   {{/if}}
+
+
+  <!-- BUTTONS -->
+  <div class="row">
+    <div class="col-xs-4">
+      <input type="button" class="btn btn-default" data-hook="change_sort" value="change sort" />
+      <p>Is sorting by {{ isSortingBy }}</p>
+    </div>
+    <div class="col-xs-4">
+      <input type="text"   data-hook="add-new-player-text"                           value="Player" />
+      <input type="button" data-hook="add-new-player-button" class="btn btn-default" value="Add New Player" />
+    </div>
+    <div class="col-xs-4">
+      <input type="button" class="btn btn-default" data-hook="reset" value="reset" />
+    </div>
+  </div>
+
 </template>
 
 <template name="player">
   <div class="player {{selected}}">
     <span class="name">{{name}}</span>
     <span class="score">{{score}}</span>
+    <button class="btn btn-default remove-button" data-hook="remove-player">X</button>
   </div>
 </template>
 
