@@ -88,7 +88,8 @@ enableMogger = function() {
                 callback: interceptParameters
             }
         ],
-        showPause: false
+        showPause: false,
+        pointcut: /^[^_]./,
     });
 
     mogger.traceObj({ before: { message: 'Players:' }, targetTitle: 'Players' });

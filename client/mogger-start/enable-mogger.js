@@ -93,6 +93,7 @@ enableMogger = function() {
                 callback: interceptParameters
             }
         ],
+        pointcut: /^[^_]./,
         showArguments: true
     });
 
