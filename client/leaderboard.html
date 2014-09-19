@@ -4,44 +4,60 @@
 
 <body>
   <div class="container">
-    <div id="outer">
-      {{> leaderboard}}
-    </div>
+    {{> leaderboard}}
   </div>
 </body>
 
 <template name="leaderboard">
-  <div class="leaderboard">
-    {{#each players}}
-      {{> player}}
-    {{/each}}
-  </div>
-
-
-  {{#if selected_name}}
-  <div class="details">
-    <div class="name">{{selected_name}}</div>
-    <input type="button" class="inc" value="Give 5 points" />
-  </div>
-  {{else}}
-  <div class="none">Click a player to select</div>
-  {{/if}}
-
-
-  <!-- BUTTONS -->
   <div class="row">
-    <div class="col-xs-4">
-      <input type="button" class="btn btn-default" data-hook="change_sort" value="change sort" />
-      <p>Is sorting by {{ isSortingBy }}</p>
+    <div class="col-md-6">
+
+      <div class="leaderboard">
+        {{#each players}}
+          {{> player}}
+        {{/each}}
+      </div>
+
+      {{#if selected_name}}
+      <div class="details">
+        <div class="name">{{selected_name}}</div>
+        <input type="button" class="inc" value="Give 5 points" />
+      </div>
+      {{else}}
+      <div class="none">Click a player to select</div>
+      {{/if}}
+
     </div>
-    <div class="col-xs-4">
-      <input type="text"   data-hook="add-new-player-text"                           value="Player" />
-      <input type="button" data-hook="add-new-player-button" class="btn btn-default" value="Add New Player" />
-    </div>
-    <div class="col-xs-4">
-      <input type="button" class="btn btn-default" data-hook="reset" value="reset" />
+
+    <!-- BUTTONS -->
+    <div class="col-md-6 buttons-rows">
+
+      <div role="form">
+        <div class="form-group">
+          <label>sorting by: {{ isSortingBy }}</label>
+          <p><input type="button" class="btn btn-default" data-hook="change_sort" value="change: sort by name" /></p>
+        </div>
+        <hr>
+        <div class="form-group">
+          <label for="add-new-player">Players:</label>
+          <div class="row">
+            <div class="col-md-4">
+              <input  id="add-new-player" type="text" class="form-control" data-hook="add-new-player-text" placeholder="Player Name..." />
+            </div>
+            <div class="col-md-2">
+              <input type="button" data-hook="add-new-player-button" class="btn btn-default" value="Add" />
+            </div>
+            <div class="col-md-4">
+              <input type="button" class="btn btn-default" data-hook="reset" value="Reset - Insert Random Players" />
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+        </div>
+      </div>
     </div>
   </div>
+
 
 </template>
 

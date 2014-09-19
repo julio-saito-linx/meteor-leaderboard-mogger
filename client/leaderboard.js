@@ -83,11 +83,11 @@ Template.leaderboard.events({
     //toggle sort
     if(isSortingBy() === 'score'){
       Session.set("selected_sort", {sort: [["name", "asc"],   ["score", "desc"]]});
-      element.val('sort by score');
+      element.val('change: sort by score');
     }
     else{
       Session.set("selected_sort", {sort: [["score", "desc"], ["name", "asc"]]});
-      element.val('sort by name');
+      element.val('change: sort by name');
     }
   }
 });

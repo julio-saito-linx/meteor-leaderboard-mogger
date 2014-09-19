@@ -89,3 +89,7 @@ body {
 .remove-button{
     margin-left: 10px;
 }
+
+.buttons-rows .row{
+    margin: 20px 0;
+}
